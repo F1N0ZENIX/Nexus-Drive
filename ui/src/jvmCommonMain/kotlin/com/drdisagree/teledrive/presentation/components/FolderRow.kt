@@ -41,7 +41,8 @@ fun FolderRow(
     selected: Boolean = false,
     showFavorite: Boolean = true,
     showAvailableOffline: Boolean = true,
-    onLongClick: () -> Unit = {}
+    onLongClick: () -> Unit = {},
+    appearance: com.drdisagree.teledrive.domain.model.FolderAppearance? = null
 ) {
     val compact = LocalCompactLayout.current
     Row(
@@ -68,11 +69,7 @@ fun FolderRow(
                 .background(MaterialTheme.colorScheme.surfaceContainerHighest),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Filled.Folder,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
-            )
+            FolderAppearanceIcon(appearance, 24.dp)
         }
         Spacer(Modifier.width(if (compact) 10.dp else 14.dp))
         Column(modifier = Modifier.weight(1f)) {

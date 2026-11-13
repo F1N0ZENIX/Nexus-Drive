@@ -12,6 +12,8 @@ data class FilesUiState(
     val folderName: UiText = UiText.Plain(""),
     val breadcrumbs: List<FolderCrumb> = emptyList(),
     val folders: List<DriveFolder> = emptyList(),
+    val folderAppearances: Map<String, com.drdisagree.teledrive.domain.model.FolderAppearance> = emptyMap(),
+    val canEditAppearance: Boolean = false,
     val selection: Set<String> = emptySet(),
     val folderSelection: Set<String> = emptySet(),
     val viewMode: ViewMode = ViewMode.GRID,

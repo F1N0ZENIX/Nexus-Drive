@@ -224,6 +224,12 @@ class FilesViewModel(
                 ?: UiText.Resource(Res.string.files_root_name),
             breadcrumbs = breadcrumbsFor(folder),
             folders = folders,
+            folderAppearances = folders.mapNotNull { folder ->
+                com.drdisagree.teledrive.domain.model.FolderAppearance.read(
+                    prefs.folderAppearances, prefs.storageChatId, folder.id
+                )?.let { folder.id to it }
+            }.toMap(),
+            canEditAppearance = prefs.storageChatId != null,
             selection = selected,
             folderSelection = selectedFolders,
             viewMode = prefs.viewMode,
@@ -235,6 +241,16 @@ class FilesViewModel(
             capabilities = capabilities
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), FilesUiState())
+
+    fun setFolderAppearance(folderId: String, appearance: com.drdisagree.teledrive.domain.model.FolderAppearance?) {
+        viewModelScope.launch {
+            settingsRepository.update { prefs ->
+                prefs.copy(folderAppearances = com.drdisagree.teledrive.domain.model.FolderAppearance.put(
+                    prefs.folderAppearances, prefs.storageChatId, folderId, appearance
+                ))
+            }
+        }
+    }
 
     private fun folderFlow(): Flow<DriveFolder?> =
         folderId?.let { fileRepository.observeFolder(it) }

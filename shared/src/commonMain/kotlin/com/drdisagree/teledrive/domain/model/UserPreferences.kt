@@ -1,6 +1,7 @@
 package com.drdisagree.teledrive.domain.model
 
 data class UserPreferences(
+    val folderAppearances: Set<String> = emptySet(),
     val onboardingComplete: Boolean = false,
     val storageChatId: Long? = null,
 
@@ -58,7 +59,8 @@ data class UserPreferences(
     val allowMeteredTransfers: Boolean = true,
     val debugLogging: Boolean = false,
 
-    val updateCheckEnabled: Boolean = true,
+    // The upstream release is not a Nexus build; avoid advertising it by default.
+    val updateCheckEnabled: Boolean = false,
     val lastUpdateCheckAt: Long = 0L,
     val notifiedUpdateVersion: String = "",
     val skippedUpdateVersion: String = "",

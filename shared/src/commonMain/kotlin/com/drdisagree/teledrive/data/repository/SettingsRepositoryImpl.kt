@@ -67,6 +67,7 @@ class SettingsRepositoryImpl(
     private fun Preferences.toUserPreferences(): UserPreferences {
         val defaults = UserPreferences()
         return UserPreferences(
+            folderAppearances = this[PreferenceKeys.FOLDER_APPEARANCES] ?: defaults.folderAppearances,
             onboardingComplete = this[PreferenceKeys.ONBOARDING_COMPLETE]
                 ?: defaults.onboardingComplete,
             storageChatId = this[PreferenceKeys.STORAGE_CHAT_ID],
@@ -170,6 +171,7 @@ class SettingsRepositoryImpl(
     }
 
     private fun androidx.datastore.preferences.core.MutablePreferences.write(prefs: UserPreferences) {
+        this[PreferenceKeys.FOLDER_APPEARANCES] = prefs.folderAppearances
         this[PreferenceKeys.ONBOARDING_COMPLETE] = prefs.onboardingComplete
         prefs.storageChatId?.let { this[PreferenceKeys.STORAGE_CHAT_ID] = it }
             ?: remove(PreferenceKeys.STORAGE_CHAT_ID)

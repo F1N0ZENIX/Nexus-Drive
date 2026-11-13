@@ -975,4 +975,9 @@
         <item>Español</item>
         <item>Bahasa Indonesia</item>
     </string-array>
+    <string name="folder_appearance_title">Aparência da pasta</string>
+    <string name="folder_appearance_local">Só neste aparelho. Não sincroniza com o TeleDrive e se perde ao limpar os dados do app.</string>
+    <string name="folder_appearance_emoji">Emoji (opcional)</string>
+    <string name="folder_appearance_reset">Restaurar aparência</string>
+    <string name="folder_appearance_color">Cor %1$d</string>
 </resources>

@@ -135,6 +135,8 @@ import com.drdisagree.teledrive.presentation.components.FolderRow
 import com.drdisagree.teledrive.presentation.components.MenuAction
 import com.drdisagree.teledrive.presentation.components.RefreshAction
 import com.drdisagree.teledrive.presentation.components.RefreshableContent
+import com.drdisagree.teledrive.presentation.components.FolderAppearanceDialog
+import com.drdisagree.teledrive.resources.folder_appearance_title
 import com.drdisagree.teledrive.presentation.components.RenameDialog
 import com.drdisagree.teledrive.presentation.components.keyboardCollection
 import com.drdisagree.teledrive.presentation.components.keyboardCollectionItem
@@ -247,6 +249,7 @@ fun FilesScreen(
     val allSelected by viewModel.allSelected.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    var appearanceFolderId by remember { mutableStateOf<String?>(null) }
     var showCreateFolder by remember { mutableStateOf(false) }
     var confirmDeleteLocal by remember { mutableStateOf(false) }
     var showSortMenu by remember { mutableStateOf(false) }
@@ -486,6 +489,12 @@ fun FilesScreen(
                                     }
 
                                     val actions = buildList {
+                                        if (state.selectionCount == 1 && state.folderInSelection && state.canEditAppearance) {
+                                            add(MenuAction(label = stringResource(Res.string.folder_appearance_title),
+                                                icon = Icons.Filled.FolderOpen) {
+                                                appearanceFolderId = state.folderSelection.singleOrNull()
+                                            })
+                                        }
                                         if (filesOnly) {
                                             add(
                                                 MenuAction(
@@ -823,6 +832,13 @@ fun FilesScreen(
             }
         )
     }
+    appearanceFolderId?.let { id ->
+        FolderAppearanceDialog(
+            initial = state.folderAppearances[id],
+            onSave = { appearance -> viewModel.setFolderAppearance(id, appearance); appearanceFolderId = null },
+            onDismiss = { appearanceFolderId = null }
+        )
+    }
     if (showCreateFolder) {
         RenameDialog(
             title = stringResource(Res.string.files_new_folder),
@@ -1099,6 +1115,7 @@ private fun FilesContent(
             if (state.viewMode == ViewMode.GRID) {
                 FolderGridItem(
                     folder = folder,
+                    appearance = state.folderAppearances[folder.id],
                     selected = folderSelected,
                     onClick = {
                         if (state.selectionMode) viewModel.toggleFolderSelection(folder.id)
@@ -1112,6 +1129,7 @@ private fun FilesContent(
             } else {
                 FolderRow(
                     folder = folder,
+                    appearance = state.folderAppearances[folder.id],
                     selected = folderSelected,
                     onClick = {
                         if (state.selectionMode) viewModel.toggleFolderSelection(folder.id)

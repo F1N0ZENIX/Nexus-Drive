@@ -978,4 +978,9 @@
         <item>Español</item>
         <item>Bahasa Indonesia</item>
     </string-array>
+    <string name="folder_appearance_title">Folder appearance</string>
+    <string name="folder_appearance_local">Only on this device. Not synced to TeleDrive; lost when app data is cleared.</string>
+    <string name="folder_appearance_emoji">Emoji (optional)</string>
+    <string name="folder_appearance_reset">Reset appearance</string>
+    <string name="folder_appearance_color">Color %1$d</string>
 </resources>

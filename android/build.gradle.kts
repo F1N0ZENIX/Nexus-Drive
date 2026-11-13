@@ -45,6 +45,8 @@ android {
     }
     buildTypes {
         debug {
+            // Keep the experimental build side-by-side with the original TeleDrive.
+            applicationIdSuffix = ".nexus"
             if (ciKeystore != null) {
                 signingConfig = signingConfigs.getByName("release")
             }

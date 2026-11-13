@@ -41,7 +41,8 @@ fun FolderGridItem(
     selected: Boolean = false,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    appearance: com.drdisagree.teledrive.domain.model.FolderAppearance? = null
 ) {
     Column(
         modifier = modifier
@@ -63,12 +64,7 @@ fun FolderGridItem(
                 .aspectRatio(1f),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Filled.Folder,
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
+            FolderAppearanceIcon(appearance, 48.dp)
         }
         Column(modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
