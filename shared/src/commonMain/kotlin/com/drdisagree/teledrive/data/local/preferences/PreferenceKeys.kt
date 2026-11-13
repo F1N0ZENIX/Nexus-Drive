@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 
 object PreferenceKeys {
+    val FOLDER_APPEARANCES = stringSetPreferencesKey("nexus_folder_appearances_local")
     val ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
     val STORAGE_CHAT_ID = longPreferencesKey("storage_chat_id")
     val API_ID_ENCRYPTED = stringPreferencesKey("api_id_enc")
