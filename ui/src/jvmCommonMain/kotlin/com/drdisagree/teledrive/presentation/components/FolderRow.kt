@@ -1,3 +1,4 @@
+// Modified by Nexus Drive contributors in 2026; based on TeleDrive.
 package com.drdisagree.teledrive.presentation.components
 
 import androidx.compose.foundation.background

@@ -1,3 +1,4 @@
+// Modified by Nexus Drive contributors in 2026; based on TeleDrive.
 import com.android.build.api.variant.FilterConfiguration
 
 plugins {
