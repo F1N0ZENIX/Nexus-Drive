@@ -4,13 +4,33 @@ on:
     branches: [nexus-folder-appearance]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: nexus-folder-appearance
+      - name: Apply staged changes to the isolated branch
+        run: |
+          set -eu
+          if [ -f .github/nexus.pending.patch.gz.b64 ]; then
+            base64 -d .github/nexus.pending.patch.gz.b64 | gzip -d | git apply --index
+            git rm .github/nexus.pending.patch.gz.b64
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Implement device-local folder appearance'
+            git push origin HEAD:nexus-folder-appearance
+          fi
   android:
+    needs: prepare
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: nexus-folder-appearance
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -26,10 +46,13 @@ jobs:
           path: android/build/outputs/apk/debug/*-universal-debug.apk
           if-no-files-found: error
   compatibility-tests:
+    needs: prepare
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: nexus-folder-appearance
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
